@@ -1,48 +1,120 @@
 <!DOCTYPE html>
+<html>
 <head>
-<title>Calculatrice Avancée</title>
-<link rel="stylesheet" href="index.css">
+	<title>
+		Advanced Calculator
+	</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="calculator_icon.png">
+	<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.js"
+			integrity=
+"sha512-BbVEDjbqdN3Eow8+empLMrJlxXRj5nEitiCAK5A1pUr66+jLVejo3PmjIaucRnjlB0P9R3rBUs3g5jXc8ti+fQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer">
+	</script>
+    <script src="https://unpkg.com/function-plot/dist/function-plot.js"></script>
 </head>
 
 <body>
-    <div id="buttons">
-        <div id="L0">
-<button class="ari" id="+">+</button>
-<button class="ari" id="-">-</button>
-<button class="ari" id="/">/</button>
-<button class="ari" id="times">x</button>
-<button class="ari" id="tan">tan</button>
-<button class="ari" id="ln">ln</button>
-        </div>
-
-        <div id="L1">
-<button id="1">1</button>
-<button id="2">2</button>
-<button id="3">3</button>
-<button id=".">.</button>
-<button class="ari" id="sin">sin</button>
-<button class="ari" id=cos">cos</button>
-        </div>
-        <button id="x">&#119909;</button>
-        <button id="y">&#119910;</button>
-        <div id="L2">
-<button id="4">4</button>
-<button id="5">5</button>
-<button id="6">6</button>
-<button id="enter">enter</button>
-<button id="7">7</button>
-<button id="8">8</button>
-<button id="9">9</button>
-<button id="b0">0</button>
-<button id="pi">&pi;</button>
-<button id="exp">e</button>
-        </div>
-        <button id="left_par">(</button>
-        <button id="right_par">)</button>
-        <button id="plot">plot</button>
-        <button id="sqrt">&Sqrt;</button>
-        <button id="percent">%</button>
+	<form>
+		<table>
+			<tr>
+				<td colspan="6">
+					<input id="display" type="text"> <!--Where calculations are displayed-->
+				</td>
+			</tr>
+			<tr>
+				<td><input type="button" value="1"
+						onclick="display.value += '1'"></td>
+				<td><input type="button" value="2"
+						onclick="display.value += '2'"></td>
+				<td><input type="button" value="3"
+						onclick="display.value += '3'"></td>
+				<td><input class="erase" type="button" value="AC"
+						onclick="display.value = ''"></td>
+				<td><input class="erase" type="button" value="C"
+						onclick="backspace()"></td>
+				<td><input type="button" value="Enter"
+						onclick="calculate()"></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="4"
+						onclick="display.value += '4'"></td>
+				<td><input type="button" value="5"
+						onclick="display.value += '5'"></td>
+				<td><input type="button" value="6"
+						onclick="display.value += '6'"></td>
+				<td><input class="ari" type="button" value="-"
+						onclick="display.value += '-'"></td>
+				<td><input class="ari" type="button" value="%"
+						onclick="display.value += '%'"></td>
+				<td><input class="ari" type="button" value="cos"
+						onclick="display.value += 'cos('"></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="7"
+						onclick="display.value += '7'"></td>
+				<td><input type="button" value="8"
+						onclick="display.value += '8'"></td>
+				<td><input type="button" value="9"
+						onclick="display.value += '9'"></td>
+				<td><input type="button" value="x"
+						onclick="display.value += '*'"></td>
+				<td><input class="ari" type="button" value="!"
+						onclick="display.value += '!'"></td>
+				<td><input class="ari" type="button" value="sin"
+						onclick="display.value += 'sin('"></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="."
+						onclick="display.value += '.'"></td>
+				<td><input type="button" value="0"
+						onclick="display.value += '0'"></td>
+				<td><input type="button" value="="
+						onclick="display.value += '='"></td>
+				<td><input type="button" value="+"
+						onclick="display.value += '+'"></td>
+				<td><input type="button" value="/"
+						onclick="display.value += '/'"></td>
+				<td><input class="ari" type="button" value="tan"
+						onclick="display.value += 'tan('"></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="e"
+						onclick="e()"></td>
+				<td><input type="button" value="&pi;"
+						onclick="pi()"></td>
+				<td><input type="button" value="^"
+						onclick="power()"></td>
+				<td><input type="button" value="("
+						onclick="display.value += '('"></td>
+				<td><input type="button" value=")"
+						onclick="display.value += ')'"></td>
+                        <td><input class="ari" type="button" value="exp"
+                            onclick="display.value += 'exp('"></td>
+			</tr>
+			<tr>
+				<td><input class="ari" type="button" value="&Sqrt;"
+						onclick="squareRoot()"></td>
+				<td><input class="ari" type="button" value="ln"
+						onclick="naturalLog()"></td>
+				<td><input class="ari" type="button" value="log10"
+						onclick="base10Log()"></td>
+						<td><input type="button" value="i"
+							onclick="display.value += 'i'"></td>
+				<td><input type="button" value="&#119909;"
+						onclick="display.value += 'x'"></td>
+				<td><input class="ari" type="button" value="plot"
+						onclick="display.value += plot()"></td>
+			</tr>
+		</table>
+	</form>
+    <div id="Graph">
+        <p id="y">y:</p><input id="ymin" type="text" size="4" value="-2"><input id="ymax" type="text" size="4" value="10">
+        <p id="x">x:</p><input id="xmin" type="text" size="4" value="-4"><input id="xmax" type="text" size="4" value="10">
     </div>
+    
 </body>
-
+<script src="main.js"></script>
 </html>
